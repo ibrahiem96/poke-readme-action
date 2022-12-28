@@ -9,5 +9,5 @@ outputs:
   abilities:
     description: 'Pokemon Abilities'
 runs:
-  using: 'node18'
+  using: 'node16'
   main: 'index.js'
