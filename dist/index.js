@@ -14177,13 +14177,12 @@ console.log(pokemon)
  * 3. Update readme
  */
 
-function getRepo(){
+async function getRepo(){
     try {
-        octokit.request(`GET /repos/${repo}`)
-            .then((response) => response.json())
-            .then((data) => {
-            console.log(data);
-        });
+        const repoRes = await octokit.request(`GET /repos/${repo}`);
+        const repoData = await repoRes.json();
+        console.log(repoData);
+        
     } catch (error) {
         console.log(error)
     }
