@@ -22,8 +22,9 @@ console.log(pokemon)
  * 3. Update readme
  */
 
-async function getRepo(){
-    await octokit.request(`GET /repos/${repo_owner}/${repo}`)
+function getRepo(){
+    console.log("getting repo...")
+    octokit.request(`GET /repos/${repo_owner}/${repo}`)
         .then((repoRes) => repoRes.json())
         .then((data) => {
             console.log(data)
