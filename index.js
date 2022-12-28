@@ -42,7 +42,7 @@ fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`)
         .then((response) => response.json())
         .then((data) => { 
             const spriteUrl = data.sprites.front_default;
-            const spriteMarkdown = `![image](${spriteUrl})`;
+            const spriteMarkdown = `<!--Pokemon Sprite-->\n![image](${spriteUrl})`;
 
             console.log(spriteMarkdown);
 
