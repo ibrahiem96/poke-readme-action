@@ -13,8 +13,8 @@ __nccwpck_require__.r(__webpack_exports__);
 // 1. Clone repository
 // 2. Run `node index.js <pokemon-name?>`
 
-// const https = require('https');
-// const fs = require('fs');
+const https = __nccwpck_require__(5687);
+const fs = __nccwpck_require__(7147);
 
 const core = __nccwpck_require__(2810);
 // const github = require('@actions/github');
@@ -23,8 +23,8 @@ const core = __nccwpck_require__(2810);
 const pokemon = core.getInput('pokemon');
 // const pokemon = process.argv.slice(2)[0];
 console.log(pokemon)
-// const spriteImageFileName = pokemon+"-sprite.png"
-// const spriteImageFile = fs.createWriteStream(spriteImageFileName);
+const spriteImageFileName = pokemon+"-sprite.png"
+const spriteImageFile = fs.createWriteStream(spriteImageFileName);
 
 // get pokemon data
 // let fetchResponse = fetch("https://pokeapi.co/api/v2/pokemon/"+pokemon);
@@ -32,27 +32,40 @@ console.log(pokemon)
 const response = await (0,node_fetch__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .ZP)("https://pokeapi.co/api/v2/pokemon/"+pokemon);
 const data = await response.json()
 
-console.log(data);
-console.log(data.abilities);
+// console.log(data);
+// console.log(data.abilities);
 core.setOutput("abilities", data.abilities);
+
+spriteUrl = data.sprites.front_default;
+console.log(spriteUrl);
+
+https.get(spriteUrl, function(response) {
+    response.pipe(spriteImageFile);
+    
+    spriteImageFile.on("finish", () => {
+        spriteImageFile.close();
+        console.log("Downloaded "+spriteImageFileName);
+    });
+    
+});
 
 // download sprite from received data
 // fetchResponse.then(response => response.json()).then(data => {
 //     console.log(data);
 //     console.log(data.abilities);
 //     core.setOutput("abilities", data.abilities);
-    // spriteUrl = data.sprites.front_default;
-    // console.log(spriteUrl);
+//     spriteUrl = data.sprites.front_default;
+//     console.log(spriteUrl);
 
-    // https.get(spriteUrl, function(response) {
-    //     response.pipe(spriteImageFile);
+//     https.get(spriteUrl, function(response) {
+//         response.pipe(spriteImageFile);
     
-    //     spriteImageFile.on("finish", () => {
-    //         spriteImageFile.close();
-    //         console.log("Downloaded "+spriteImageFileName);
-    //     });
+//         spriteImageFile.on("finish", () => {
+//             spriteImageFile.close();
+//             console.log("Downloaded "+spriteImageFileName);
+//         });
     
-    // });
+//     });
 
 // });
 
