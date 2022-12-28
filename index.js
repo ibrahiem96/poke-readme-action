@@ -1,43 +1,65 @@
-// This is a sample script to get data from PokeAPI
-// How to run
-// 1. Clone repository
-// 2. Run `node index.js <pokemon-name?>`
-
-const https = require('https');
-const fs = require('fs');
 import fetch from 'node-fetch';
 const core = require('@actions/core');
-// const github = require('@actions/github');
+const github = require('@actions/github');
+const { Octokit } = require("@octokit/core");
 
-// get pokemon name from input
-const pokemon = core.getInput('pokemon');
+const pokemon = core.getInput('POKEMON');
+const repo = core.getInput('REPOSITORY');
+const gh_token = core.getInput('GH_TOKEN');
+const commit_message = core.getInput('COMMIT_MESSAGE');
+
+const octokit = new Octokit({auth: gh_token})
+
 // const pokemon = process.argv.slice(2)[0];
 console.log(pokemon)
-const spriteImageFileName = pokemon+"-sprite.png"
-const spriteImageFile = fs.createWriteStream(spriteImageFileName);
+// const spriteImageFileName = pokemon+"-sprite.png"
+// const spriteImageFile = fs.createWriteStream(spriteImageFileName);
+
+/** TODO
+ * 1. Get repository
+ * 2. Get the readme
+ * 3. Update readme
+ */
+
+async function getRepo() {
+
+}
+
+function getPokemonSpriteURL() {
+    const response = fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
+    const data = response.json();
+    return data.sprites.front_default;
+}
+
+function replaceMarkdownPNG() {
+    core.setOutput("spriteURL", getPokemonSpriteURL());
+}
+
+try {
+    replaceMarkdownPNG()
+} catch (error) {
+    console.log(error)
+}
 
 // get pokemon data
 // let fetchResponse = fetch("https://pokeapi.co/api/v2/pokemon/"+pokemon);
 
-const response = await fetch("https://pokeapi.co/api/v2/pokemon/"+pokemon);
-const data = await response.json()
-
 // console.log(data);
 // console.log(data.abilities);
-core.setOutput("abilities", data.abilities);
+// core.setOutput("abilities", data.abilities);
 
-const spriteUrl = data.sprites.front_default;
-console.log(spriteUrl);
+// const spriteUrl = data.sprites.front_default;
+// console.log(spriteUrl);
 
-https.get(spriteUrl, function(response) {
-    response.pipe(spriteImageFile);
+// https.get(spriteUrl, function(response) {
+//     response.pipe(spriteImageFile);
     
-    spriteImageFile.on("finish", () => {
-        spriteImageFile.close();
-        console.log("Downloaded "+spriteImageFileName);
-    });
+//     spriteImageFile.on("finish", () => {
+//         spriteImageFile.close();
+//         console.log("Downloaded "+spriteImageFileName);
+//     });
     
-});
+// });
 
 // download sprite from received data
 // fetchResponse.then(response => response.json()).then(data => {

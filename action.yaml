@@ -1,10 +1,25 @@
 name: Poke Readme
 description: 'Add a Pokemon to your README'
 inputs:
-  pokemon:
+  POKEMON:
     description: 'Pokemon name or ID'
     required: true
     default: 'charmander'
+
+  GH_TOKEN:
+    description: "GitHub access token with Repo scope"
+    default: ${{ github.token }}
+    required: true
+
+  REPOSITORY:
+    description: "Your GitHub repository"
+    default: ${{ github.repository }}
+    required: false
+
+  COMMIT_MESSAGE:
+    description: "Add a commit message of your choice"
+    default: "Updated repo readme with pokemon sprite"
+    required: false
 outputs:
   abilities:
     description: 'Pokemon Abilities'
