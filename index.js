@@ -1,8 +1,6 @@
 const fetch = require('node-fetch');
 const core = require('@actions/core');
-// const github = require('@actions/github');
 const { Octokit } = require("@octokit/rest");
-const axios = require('axios');
 
 const pokemon = core.getInput('POKEMON');
 const repo = core.getInput('REPOSITORY');
@@ -24,10 +22,11 @@ console.log(pokemon)
  */
 
 function getRepo(){
-    const repoData = octokit.rest.repos.get({
+    const repoRes = octokit.rest.repos.get({
         owner: 'ibrahiem96',
         repo: 'ibrahiem96',
     });
+    const repoData = repoRes.json();
     console.log(repoData);
 }
 
