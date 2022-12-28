@@ -1,6 +1,67 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ 7648:
+/***/ ((module, __webpack_exports__, __nccwpck_require__) => {
+
+"use strict";
+__nccwpck_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
+__nccwpck_require__.r(__webpack_exports__);
+/* harmony import */ var node_fetch__WEBPACK_IMPORTED_MODULE_0__ = __nccwpck_require__(5085);
+// This is a sample script to get data from PokeAPI
+// How to run
+// 1. Clone repository
+// 2. Run `node index.js <pokemon-name?>`
+
+// const https = require('https');
+// const fs = require('fs');
+
+const core = __nccwpck_require__(2810);
+// const github = require('@actions/github');
+
+// get pokemon name from input
+const pokemon = core.getInput('pokemon');
+// const pokemon = process.argv.slice(2)[0];
+console.log(pokemon)
+// const spriteImageFileName = pokemon+"-sprite.png"
+// const spriteImageFile = fs.createWriteStream(spriteImageFileName);
+
+// get pokemon data
+// let fetchResponse = fetch("https://pokeapi.co/api/v2/pokemon/"+pokemon);
+
+const response = await (0,node_fetch__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .ZP)("https://pokeapi.co/api/v2/pokemon/"+pokemon);
+const data = await response.json()
+
+console.log(data);
+console.log(data.abilities);
+core.setOutput("abilities", data.abilities);
+
+// download sprite from received data
+// fetchResponse.then(response => response.json()).then(data => {
+//     console.log(data);
+//     console.log(data.abilities);
+//     core.setOutput("abilities", data.abilities);
+    // spriteUrl = data.sprites.front_default;
+    // console.log(spriteUrl);
+
+    // https.get(spriteUrl, function(response) {
+    //     response.pipe(spriteImageFile);
+    
+    //     spriteImageFile.on("finish", () => {
+    //         spriteImageFile.close();
+    //         console.log("Downloaded "+spriteImageFileName);
+    //     });
+    
+    // });
+
+// });
+
+
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } }, 1);
+
+/***/ }),
+
 /***/ 5649:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
@@ -7177,15 +7238,10 @@ const File = _File
 
 // EXPORTS
 __nccwpck_require__.d(__webpack_exports__, {
-  "t6": () => (/* reexport */ fetch_blob/* default */.Z),
-  "$B": () => (/* reexport */ file/* default */.Z),
-  "xB": () => (/* binding */ blobFrom),
-  "SX": () => (/* binding */ blobFromSync),
-  "e2": () => (/* binding */ fileFrom),
-  "RA": () => (/* binding */ fileFromSync)
+  "$B": () => (/* reexport */ file/* default */.Z)
 });
 
-// UNUSED EXPORTS: default
+// UNUSED EXPORTS: Blob, blobFrom, blobFromSync, default, fileFrom, fileFromSync
 
 ;// CONCATENATED MODULE: external "node:fs"
 const external_node_fs_namespaceObject = require("node:fs");
@@ -7211,7 +7267,7 @@ const { stat } = external_node_fs_namespaceObject.promises
  * @param {string} path filepath on the disk
  * @param {string} [type] mimetype to use
  */
-const blobFromSync = (path, type) => fromBlob((0,external_node_fs_namespaceObject.statSync)(path), path, type)
+const blobFromSync = (path, type) => fromBlob(statSync(path), path, type)
 
 /**
  * @param {string} path filepath on the disk
@@ -7231,10 +7287,10 @@ const fileFrom = (path, type) => stat(path).then(stat => fromFile(stat, path, ty
  * @param {string} path filepath on the disk
  * @param {string} [type] mimetype to use
  */
-const fileFromSync = (path, type) => fromFile((0,external_node_fs_namespaceObject.statSync)(path), path, type)
+const fileFromSync = (path, type) => fromFile(statSync(path), path, type)
 
 // @ts-ignore
-const fromBlob = (stat, path, type = '') => new fetch_blob/* default */.Z([new BlobDataItem({
+const fromBlob = (stat, path, type = '') => new Blob([new BlobDataItem({
   path,
   size: stat.size,
   lastModified: stat.mtimeMs,
@@ -7242,12 +7298,12 @@ const fromBlob = (stat, path, type = '') => new fetch_blob/* default */.Z([new B
 })], { type })
 
 // @ts-ignore
-const fromFile = (stat, path, type = '') => new file/* default */.Z([new BlobDataItem({
+const fromFile = (stat, path, type = '') => new File([new BlobDataItem({
   path,
   size: stat.size,
   lastModified: stat.mtimeMs,
   start: 0
-})], (0,external_node_path_namespaceObject.basename)(path), { type, lastModified: stat.mtimeMs })
+})], basename(path), { type, lastModified: stat.mtimeMs })
 
 /**
  * This is a blob backed up by a file on the disk
@@ -7283,9 +7339,9 @@ class BlobDataItem {
   async * stream () {
     const { mtimeMs } = await stat(this.#path)
     if (mtimeMs > this.lastModified) {
-      throw new node_domexception('The requested file could not be read, typically due to permission problems that have occurred after a reference to a file was acquired.', 'NotReadableError')
+      throw new DOMException('The requested file could not be read, typically due to permission problems that have occurred after a reference to a file was acquired.', 'NotReadableError')
     }
-    yield * (0,external_node_fs_namespaceObject.createReadStream)(this.#path, {
+    yield * createReadStream(this.#path, {
       start: this.#start,
       end: this.#start + this.size - 1
     })
@@ -7624,26 +7680,13 @@ return new B(c,{type:"multipart/form-data; boundary="+b})}
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __nccwpck_require__) => {
 
 "use strict";
-// ESM COMPAT FLAG
-__nccwpck_require__.r(__webpack_exports__);
 
 // EXPORTS
 __nccwpck_require__.d(__webpack_exports__, {
-  "AbortError": () => (/* reexport */ AbortError),
-  "Blob": () => (/* reexport */ from/* Blob */.t6),
-  "FetchError": () => (/* reexport */ FetchError),
-  "File": () => (/* reexport */ from/* File */.$B),
-  "FormData": () => (/* reexport */ esm_min/* FormData */.Ct),
-  "Headers": () => (/* reexport */ Headers),
-  "Request": () => (/* reexport */ Request),
-  "Response": () => (/* reexport */ Response),
-  "blobFrom": () => (/* reexport */ from/* blobFrom */.xB),
-  "blobFromSync": () => (/* reexport */ from/* blobFromSync */.SX),
-  "default": () => (/* binding */ fetch),
-  "fileFrom": () => (/* reexport */ from/* fileFrom */.e2),
-  "fileFromSync": () => (/* reexport */ from/* fileFromSync */.RA),
-  "isRedirect": () => (/* reexport */ isRedirect)
+  "ZP": () => (/* binding */ fetch)
 });
+
+// UNUSED EXPORTS: AbortError, Blob, FetchError, File, FormData, Headers, Request, Response, blobFrom, blobFromSync, fileFrom, fileFromSync, isRedirect
 
 ;// CONCATENATED MODULE: external "node:http"
 const external_node_http_namespaceObject = require("node:http");
@@ -9833,6 +9876,75 @@ function fixResponseChunkedTransferBadEnding(request, errorCallback) {
 /******/ 	__nccwpck_require__.m = __webpack_modules__;
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/async module */
+/******/ 	(() => {
+/******/ 		var webpackQueues = typeof Symbol === "function" ? Symbol("webpack queues") : "__webpack_queues__";
+/******/ 		var webpackExports = typeof Symbol === "function" ? Symbol("webpack exports") : "__webpack_exports__";
+/******/ 		var webpackError = typeof Symbol === "function" ? Symbol("webpack error") : "__webpack_error__";
+/******/ 		var resolveQueue = (queue) => {
+/******/ 			if(queue && !queue.d) {
+/******/ 				queue.d = 1;
+/******/ 				queue.forEach((fn) => (fn.r--));
+/******/ 				queue.forEach((fn) => (fn.r-- ? fn.r++ : fn()));
+/******/ 			}
+/******/ 		}
+/******/ 		var wrapDeps = (deps) => (deps.map((dep) => {
+/******/ 			if(dep !== null && typeof dep === "object") {
+/******/ 				if(dep[webpackQueues]) return dep;
+/******/ 				if(dep.then) {
+/******/ 					var queue = [];
+/******/ 					queue.d = 0;
+/******/ 					dep.then((r) => {
+/******/ 						obj[webpackExports] = r;
+/******/ 						resolveQueue(queue);
+/******/ 					}, (e) => {
+/******/ 						obj[webpackError] = e;
+/******/ 						resolveQueue(queue);
+/******/ 					});
+/******/ 					var obj = {};
+/******/ 					obj[webpackQueues] = (fn) => (fn(queue));
+/******/ 					return obj;
+/******/ 				}
+/******/ 			}
+/******/ 			var ret = {};
+/******/ 			ret[webpackQueues] = x => {};
+/******/ 			ret[webpackExports] = dep;
+/******/ 			return ret;
+/******/ 		}));
+/******/ 		__nccwpck_require__.a = (module, body, hasAwait) => {
+/******/ 			var queue;
+/******/ 			hasAwait && ((queue = []).d = 1);
+/******/ 			var depQueues = new Set();
+/******/ 			var exports = module.exports;
+/******/ 			var currentDeps;
+/******/ 			var outerResolve;
+/******/ 			var reject;
+/******/ 			var promise = new Promise((resolve, rej) => {
+/******/ 				reject = rej;
+/******/ 				outerResolve = resolve;
+/******/ 			});
+/******/ 			promise[webpackExports] = exports;
+/******/ 			promise[webpackQueues] = (fn) => (queue && fn(queue), depQueues.forEach(fn), promise["catch"](x => {}));
+/******/ 			module.exports = promise;
+/******/ 			body((deps) => {
+/******/ 				currentDeps = wrapDeps(deps);
+/******/ 				var fn;
+/******/ 				var getResult = () => (currentDeps.map((d) => {
+/******/ 					if(d[webpackError]) throw d[webpackError];
+/******/ 					return d[webpackExports];
+/******/ 				}))
+/******/ 				var promise = new Promise((resolve) => {
+/******/ 					fn = () => (resolve(getResult));
+/******/ 					fn.r = 0;
+/******/ 					var fnQueue = (q) => (q !== queue && !depQueues.has(q) && (depQueues.add(q), q && !q.d && (fn.r++, q.push(fn))));
+/******/ 					currentDeps.map((dep) => (dep[webpackQueues](fnQueue)));
+/******/ 				});
+/******/ 				return fn.r ? promise : getResult();
+/******/ 			}, (err) => ((err ? reject(promise[webpackError] = err) : outerResolve(exports)), resolveQueue(queue)));
+/******/ 			queue && (queue.d = 0);
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -9930,53 +10042,12 @@ function fixResponseChunkedTransferBadEnding(request, errorCallback) {
 /******/ 	})();
 /******/ 	
 /************************************************************************/
-var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
-(() => {
-// This is a sample script to get data from PokeAPI
-// How to run
-// 1. Clone repository
-// 2. Run `node index.js <pokemon-name?>`
-
-// const https = require('https');
-// const fs = require('fs');
-const fetch = __nccwpck_require__(5085)
-const core = __nccwpck_require__(2810);
-// const github = require('@actions/github');
-
-// get pokemon name from input
-const pokemon = core.getInput('pokemon');
-// const pokemon = process.argv.slice(2)[0];
-console.log(pokemon)
-// const spriteImageFileName = pokemon+"-sprite.png"
-// const spriteImageFile = fs.createWriteStream(spriteImageFileName);
-
-// get pokemon data
-let fetchResponse = fetch("https://pokeapi.co/api/v2/pokemon/"+pokemon);
-
-// download sprite from received data
-fetchResponse.then(response => response.json()).then(data => {
-    console.log(data);
-    console.log(data.abilities);
-    core.setOutput("abilities", data.abilities);
-    // spriteUrl = data.sprites.front_default;
-    // console.log(spriteUrl);
-
-    // https.get(spriteUrl, function(response) {
-    //     response.pipe(spriteImageFile);
-    
-    //     spriteImageFile.on("finish", () => {
-    //         spriteImageFile.close();
-    //         console.log("Downloaded "+spriteImageFileName);
-    //     });
-    
-    // });
-
-});
-
-
-})();
-
-module.exports = __webpack_exports__;
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module used 'module' so it can't be inlined
+/******/ 	var __webpack_exports__ = __nccwpck_require__(7648);
+/******/ 	module.exports = __webpack_exports__;
+/******/ 	
 /******/ })()
 ;
