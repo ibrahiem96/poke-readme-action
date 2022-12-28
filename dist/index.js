@@ -15482,8 +15482,8 @@ console.log(pokemon)
 
 function getRepo(){
     const repoData = octokit.rest.repos.get({
-        repo_owner,
-        repo,
+        owner: 'ibrahiem96',
+        repo: 'ibrahiem96',
     });
     console.log(repoData);
 }
