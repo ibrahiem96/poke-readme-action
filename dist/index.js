@@ -9441,7 +9441,7 @@ function getReadmeSha(){
 
 
 function getReadmeBlob(){
-    var sha;
+    let sha;
     octorest_client.rest.git.getBlob({
         owner: repo_owner,
         repo: repo_name,
