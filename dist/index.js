@@ -14177,6 +14177,19 @@ console.log(pokemon)
  * 3. Update readme
  */
 
+function getRepo(){
+    try {
+        octokit.request(`GET /repos/${repo}`)
+            .then((response) => response.json())
+            .then((data) => {
+            console.log(data);
+        });
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+getRepo();
 
 fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`)
         .then((response) => response.json())
@@ -14185,16 +14198,6 @@ fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`)
             const spriteMarkdown = `![image](${spriteUrl})`;
 
             console.log(spriteMarkdown);
-
-            try {
-                octokit.request(`GET /repos/${repo}`)
-                    .then((response) => response.json())
-                    .then((data) => {
-                    console.log(data);
-                });
-            } catch (error) {
-                console.log(error)
-            }
 
             // await getRepo();
         });
