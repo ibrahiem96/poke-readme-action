@@ -1,6 +1,7 @@
 const fetch = require('node-fetch');
 const core = require('@actions/core');
-const { Octokit } = require("@octokit/rest");
+const { Octorest } = require("@octokit/rest");
+const { Octocore } = require("@octokit/core")
 
 const pokemon = core.getInput('POKEMON');
 const repo = (repoName) => {
@@ -13,7 +14,8 @@ const repo_owner = core.getInput('REPOSITORY_OWNER')
 const gh_token = core.getInput('GH_TOKEN');
 const commit_message = core.getInput('COMMIT_MESSAGE');
 
-const octokit = new Octokit({auth: gh_token})
+const octorest = new Octorest({auth: gh_token})
+const octocore = new Octocore({auth: gh_token})
 
 // const pokemon = process.argv.slice(2)[0];
 console.log(pokemon)
@@ -33,20 +35,24 @@ console.log(pokemon)
 const repo_name = repo(core.getInput('REPOSITORY'));
 
 function getRepo(){
-    return octokit.rest.repos.get({
+    return octorest.rest.repos.get({
         owner: repo_owner,
         repo: repo_name,
     })
-    // .then(({ data }) => {
-    //     // console.log(data);
-    //     repoData = data;
-    // })
+}
+
+function getReadmeSha(){
+    return octocore.request(`GET repos/${repo_owner}/${repo_owner}/contents/README.md`)
 }
 
 getRepo().then(({ data }) => {
         console.log(data);
     }
 );
+
+getReadmeSha().then(({ data }) => {
+    console.log(data);
+})
 
 fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`)
         .then((response) => response.json())
