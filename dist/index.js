@@ -9426,20 +9426,20 @@ console.log(pokemon)
 const repo_name = repo(core.getInput('REPOSITORY'));
 
 function getRepo(){
-    var repoData;
-    octokit.rest.repos.get({
+    return octokit.rest.repos.get({
         owner: repo_owner,
         repo: repo_name,
     })
-    .then(({ data }) => {
-        // console.log(data);
-        repoData = data;
-    })
-
-    return repoData
+    // .then(({ data }) => {
+    //     // console.log(data);
+    //     repoData = data;
+    // })
 }
 
-console.log(getRepo());
+getRepo().then(({ data }) => {
+        console.log(data);
+    }
+);
 
 fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`)
         .then((response) => response.json())
