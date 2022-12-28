@@ -14,12 +14,12 @@ inputs:
   REPOSITORY:
     description: "Your GitHub repository"
     default: ${{ github.repository }}
-    required: false
+    required: true
 
   REPOSITORY_OWNER:
     description: "Your GitHub repository"
     default: ${{ github.repository_owner }}
-    required: false
+    required: true
 
   COMMIT_MESSAGE:
     description: "Add a commit message of your choice"
