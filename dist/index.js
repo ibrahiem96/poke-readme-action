@@ -9468,9 +9468,9 @@ getRepo().then(({ data }) => {
 console.log(getReadmeSha());
 
 
-getReadmeBlob().then(({ data }) => {
-    console.log(data);
-})
+// getReadmeBlob().then(({ data }) => {
+//     console.log(data);
+// })
 
 
 fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`)
