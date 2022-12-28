@@ -15236,15 +15236,8 @@ function updateReadme() {
             slice(0, startIndex)}\n${getNewProjectSection()}`;
         commitUpdatedReadme(repo, path, sha, encoding, updatedContent);
     } catch (error) {
-        try {
-            const content = `\n${getNewProjectSection()}`;
-            octokit.request(`PUT /repos/${repo_owner}/${repo}/contents/{path}`, {
-                message: "Create README",
-                content: Buffer.from(content, "utf-8").toString(encoding),
-            });
-        } catch (error) {
-            console.log(error);
-        }
+
+        console.log(error);
         
     }
 }
