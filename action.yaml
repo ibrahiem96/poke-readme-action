@@ -1,0 +1,13 @@
+name: Poke Readme
+description: 'Add a Pokemon to your README'
+inputs:
+  pokemon:
+    description: 'Pokemon name or ID'
+    required: true
+    default: 'charmander'
+outputs:
+  abilities:
+    description: 'Pokemon Abilities'
+runs:
+  using: 'node18'
+  main: 'index.js'
