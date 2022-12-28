@@ -8112,9 +8112,9 @@ console.log(pokemon)
  * 3. Update readme
  */
 
-function getRepo(){
+async function getRepo(){
     console.log("getting repo...")
-    octokit.request(`GET /repos/${repo}`)
+    await octokit.request(`GET /repos/${repo}`)
         .then((response) => response.json())
         .then((data) => {
             console.log(data);
