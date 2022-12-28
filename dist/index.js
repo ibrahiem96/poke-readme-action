@@ -9434,17 +9434,22 @@ const repo_name = repo(core.getInput('REPOSITORY'));
 //     })
 // }
 
-function getReadmeSha(){
+function getReadme(){
     return octocore_client.request(`GET /repos/${repo_owner}/${repo_name}/contents/README.md`)
 }
 
-function updateReadme(){
-    getReadmeSha().then(({ data }) => {
+function updateReadme(spriteMarkdown){
+    getReadme().then(({ data }) => {
+        const rawContent = Buffer.from(data.content, data.encoding).toString();
+        const startIndex = rawContent.indexOf("<!--Pokemon Sprite-->")
+        const updatedContent = `${startIndex === -1 ? rawContent : rawContent.slice(0, startIndex)}\n${spriteMarkdown}`
+
         octocore_client.request(`PUT /repos/${repo_owner}/${repo_name}/contents/README.md`, {
             message: commit_message,
-            content: btoa("# testing"),
+            content: Buffer.from(updatedContent, "utf-8").toString(data.encoding),
             path: "README.md",
             sha: data.sha,
+            branch: "dev",
         })
     })
     // getReadmeSha().then(({ data }) => {        
@@ -9479,7 +9484,7 @@ function updateReadme(){
 //     console.log(data);
 // })
 
-updateReadme();
+// updateReadme();
 
 
 fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`)
@@ -9490,6 +9495,7 @@ fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`)
 
             console.log(spriteMarkdown);
 
+            updateReadme(spriteMarkdown);
             // await getRepo();
         });
 
