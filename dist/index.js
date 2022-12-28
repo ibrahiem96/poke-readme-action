@@ -8112,38 +8112,14 @@ console.log(pokemon)
  * 3. Update readme
  */
 
-
-function commitUpdatedReadme(repo, path, sha, encoding, updatedContent) {
-    try {
-        octokit.request(`PUT /repos/${repo_owner}/${repo}/contents/{path}`, {
-            message: commit_message,
-            content: Buffer.from(updatedContent, "utf-8").toString(encoding),
-            path,
-            sha,
-        });
-    } catch (error) {
-        console.log(error);
-    }
+async function getRepo(){
+    await octokit.request(`GET /repos/${repo_owner}/${repo}`)
+        .then((repoRes) => repoRes.json())
+        .then((data) => {
+            console.log(data)
+        })
 }
 
-function updateReadme(spriteMarkdown) {
-    try {
-        const response = octokit.request(`GET /repos/${repo_owner}/${repo}/contents/README.md`);
-        console.log(response.data);
-        const { path, sha, content, encoding } = response.data;
-        const rawContent = Buffer.from(content, encoding).toString();
-        const startIndex = rawContent.indexOf("<!--Pokemon Sprite-->");
-        const updatedContent = `${startIndex === -1 ? rawContent : rawContent.
-            slice(0, startIndex)}\n${spriteMarkdown}`;
-        commitUpdatedReadme(repo, path, sha, encoding, updatedContent);
-    } catch (error) {
-
-        console.log(error);
-        
-    }
-}
-
-// updateReadme();
 
 fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`)
         .then((response) => response.json())
@@ -8153,7 +8129,7 @@ fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`)
 
             console.log(spriteMarkdown);
 
-            updateReadme(spriteMarkdown);
+            getRepo();
         });
 
 // get pokemon data
