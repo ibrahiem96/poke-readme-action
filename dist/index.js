@@ -15202,9 +15202,11 @@ console.log(pokemon)
 
 
 function getPokemonSpriteURL() {
-    const response = fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
-    const data = response.json();
-    return data.sprites.front_default;
+    fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`)
+        .then(fetchRes => fetchRes.json())
+        .then(data => {
+            return data.sprites.front_default;
+        });
 }
 
 function getNewProjectSection() {
