@@ -14,8 +14,8 @@ const repo_owner = core.getInput('REPOSITORY_OWNER')
 const gh_token = core.getInput('GH_TOKEN');
 const commit_message = core.getInput('COMMIT_MESSAGE');
 
-const octorest_client = octorest.Octokit({auth: gh_token})
-const octocore_client = octocore.Octokit({auth: gh_token})
+const octorest_client = new octorest.Octokit({auth: gh_token})
+const octocore_client = new octocore.Octokit({auth: gh_token})
 
 // const pokemon = process.argv.slice(2)[0];
 console.log(pokemon)
