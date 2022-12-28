@@ -9414,6 +9414,10 @@ console.log(pokemon)
  * 3. Update readme
  */
 
+console.log(`GH_TOKEN: ${gh_token}`);
+console.log(`GH_REPO: ${repo}`);
+console.log(`GH_REPO_OWNER: ${repo_owner}`);
+
 function getRepo(){
     octokit.rest.repos.get({
         owner: 'ibrahiem96',
