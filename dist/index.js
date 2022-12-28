@@ -9427,38 +9427,61 @@ console.log(pokemon)
 
 const repo_name = repo(core.getInput('REPOSITORY'));
 
-function getRepo(){
-    return octorest_client.rest.repos.get({
-        owner: repo_owner,
-        repo: repo_name,
-    })
-}
+// function getRepo(){
+//     return octorest_client.rest.repos.get({
+//         owner: repo_owner,
+//         repo: repo_name,
+//     })
+// }
+
+// function getReadmeSha(){
+//     return octocore_client.request(`GET /repos/${repo_owner}/${repo_name}/contents/README.md`)
+// }
 
 function getReadmeSha(){
-    return octocore_client.request(`GET /repos/${repo_owner}/${repo_owner}/contents/README.md`)
-}
-
-function getReadmeBlob(){
-    getReadmeSha().then(({ data }) => {
-        octorest_client.rest.git.getBlob({
-            owner: repo_owner,
-            repo: repo_name,
-            file_sha: data.sha
+    let sha;
+    octocore_client.request(`GET /repos/${repo_owner}/${repo_name}/contents/README.md`)
+        .then(function(res){
+            return res.json();
         })
-    })
+        .then(function(data){
+            sha = data;
+        })
+    return sha;
 }
 
-getRepo().then(({ data }) => {
-    console.log(data);
-})
+// function getReadmeBlob(){
+//     getReadmeSha().then(({ data }) => {        
+//         octorest_client.rest.repos.createOrUpdateFileContents({
+//             owner: repo_owner,
+//             repo: repo_name,
+//             path: "README.md",
+//             message: commit_message,
+//             content: "# testing #",
+//             sha: data.sha,
+//             branch: "dev",
+//             committer: committer,
+//             commiter.name,
+//             committer.email,
+//             author.name
+//             author.email: ,
+//           })
+//     })
+// }
 
-getReadmeSha().then(({ data }) => {
-    console.log(data);
-})
+// getRepo().then(({ data }) => {
+//     console.log(data);
+// })
 
-getReadmeBlob().then(({ data }) => {
-    console.log(data);
-})
+// getReadmeSha().then(({ data }) => {
+//     console.log(data);
+// })
+
+console.log(getReadmeSha());
+
+// getReadmeBlob().then(({ data }) => {
+//     console.log(data);
+// })
 
 
 fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`)
