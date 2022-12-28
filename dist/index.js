@@ -9435,13 +9435,12 @@ const repo_name = repo(core.getInput('REPOSITORY'));
 // }
 
 function getReadme(){
-    return octocore_client.request(`GET /repos/${repo_owner}/${repo_name}/contents/README.md`, {
-        branch: "dev"
-    })
+    return octocore_client.request(`GET /repos/${repo_owner}/${repo_name}/contents/README.md?ref=dev`)
 }
 
 function updateReadme(spriteMarkdown){
     getReadme().then(({ data }) => {
+        console.log(data)
         const rawContent = Buffer.from(data.content, data.encoding).toString();
         const startIndex = rawContent.indexOf("<!--Pokemon Sprite-->")
         const updatedContent = `${startIndex === -1 ? rawContent : rawContent.slice(0, startIndex)}\n${spriteMarkdown}`
