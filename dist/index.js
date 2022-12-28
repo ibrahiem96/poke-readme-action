@@ -8114,11 +8114,8 @@ console.log(pokemon)
 
 function getRepo(){
     console.log("getting repo...")
-    octokit.request(`GET /repos/${repo}`)
-        .then((repoRes) => repoRes.json())
-        .then((data) => {
-            console.log(data)
-        })
+    const repoRes = octokit.request(`GET /repos/${repo}`);
+    console.log(repoRes);
 }
 
 
