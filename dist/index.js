@@ -9441,13 +9441,15 @@ function getReadmeSha(){
 
 
 function getReadmeBlob(){
-    return octorest_client.rest.git.getBlob({
+    var sha;
+    octorest_client.rest.git.getBlob({
         owner: repo_owner,
         repo: repo_name,
         file_sha: getReadmeSha().then(({ data }) => {
-            return data.sha
+            sha = data.sha
         })
     })
+    return sha;
 }
 
 getRepo().then(({ data }) => {
