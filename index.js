@@ -51,6 +51,7 @@ function commitUpdatedReadme(repo, path, sha, encoding, updatedContent) {
 function updateReadme() {
     try {
         const response = octokit.request(`GET /repos/${repo_owner}/${repo}/contents/README.md`);
+        console.log(response.data);
         const { path, sha, content, encoding } = response.data;
         const rawContent = Buffer.from(content, encoding).toString();
         const startIndex = rawContent.indexOf("<!--Pokemon Sprite-->");
