@@ -36,7 +36,7 @@ const data = await response.json()
 // console.log(data.abilities);
 core.setOutput("abilities", data.abilities);
 
-spriteUrl = data.sprites.front_default;
+const spriteUrl = data.sprites.front_default;
 console.log(spriteUrl);
 
 https.get(spriteUrl, function(response) {
