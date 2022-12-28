@@ -1,4 +1,4 @@
-import fetch from 'node-fetch';
+const fetch = require('node-fetch');
 const core = require('@actions/core');
 // const github = require('@actions/github');
 const { Octokit } = require("@octokit/core");
@@ -23,18 +23,6 @@ console.log(pokemon)
  */
 
 
-function getPokemonSpriteURL() {
-    fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`)
-        .then(fetchRes => fetchRes.json())
-        .then(data => {
-            return data.sprites.front_default;
-        });
-}
-
-function getNewProjectSection() {
-    return `![image](${getPokemonSpriteURL()})`;
-}
-
 function commitUpdatedReadme(repo, path, sha, encoding, updatedContent) {
     try {
         octokit.request(`PUT /repos/${repo_owner}/${repo}/contents/{path}`, {
@@ -48,7 +36,7 @@ function commitUpdatedReadme(repo, path, sha, encoding, updatedContent) {
     }
 }
 
-function updateReadme() {
+function updateReadme(spriteMarkdown) {
     try {
         const response = octokit.request(`GET /repos/${repo_owner}/${repo}/contents/README.md`);
         console.log(response.data);
@@ -56,7 +44,7 @@ function updateReadme() {
         const rawContent = Buffer.from(content, encoding).toString();
         const startIndex = rawContent.indexOf("<!--Pokemon Sprite-->");
         const updatedContent = `${startIndex === -1 ? rawContent : rawContent.
-            slice(0, startIndex)}\n${getNewProjectSection()}`;
+            slice(0, startIndex)}\n${spriteMarkdown}`;
         commitUpdatedReadme(repo, path, sha, encoding, updatedContent);
     } catch (error) {
 
@@ -65,7 +53,18 @@ function updateReadme() {
     }
 }
 
-updateReadme();
+// updateReadme();
+
+fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`)
+        .then((response) => response.json())
+        .then((data) => { 
+            const spriteUrl = data.sprites.front_default;
+            const spriteMarkdown = `![image](${spriteUrl})`;
+
+            console.log(spriteMarkdown);
+
+            updateReadme(spriteMarkdown);
+        });
 
 // get pokemon data
 // let fetchResponse = fetch("https://pokeapi.co/api/v2/pokemon/"+pokemon);

@@ -22,6 +22,6 @@
     "@actions/github": "^5.1.1",
     "@octokit/core": "^4.1.0",
     "@vercel/ncc": "^0.36.0",
-    "node-fetch": "^3.3.0"
+    "node-fetch": "^2.6.7"
   }
 }
