@@ -9427,8 +9427,8 @@ const repo_name = repo(core.getInput('REPOSITORY'));
 
 function getRepo(){
     octokit.rest.repos.get({
-        repo_owner,
-        repo_name,
+        owner: repo_owner,
+        repo: repo_name,
     })
     .then(({ data }) => {
         console.log(data);
