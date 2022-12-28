@@ -45,14 +45,30 @@ function getReadmeSha(){
     return octocore_client.request(`GET /repos/${repo_owner}/${repo_owner}/contents/README.md`)
 }
 
+
+
+function getReadmeBlob(){
+    return octorest_client.rest.git.getBlob({
+        owner: repo_owner,
+        repo: repo_name,
+        file_sha: getReadmeSha().then(({ data }) => {
+            return data.sha
+        })
+    })
+}
+
 getRepo().then(({ data }) => {
-        console.log(data);
-    }
-);
+    console.log(data);
+})
 
 getReadmeSha().then(({ data }) => {
     console.log(data);
 })
+
+getReadmeBlob().then(({ data }) => {
+    console.log(data);
+})
+
 
 fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`)
         .then((response) => response.json())
