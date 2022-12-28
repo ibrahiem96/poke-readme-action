@@ -9396,7 +9396,12 @@ const core = __nccwpck_require__(2810);
 const { Octokit } = __nccwpck_require__(3676);
 
 const pokemon = core.getInput('POKEMON');
-const repo = core.getInput('REPOSITORY');
+const repo = (repoName) => {
+    if (repoName.includes('/')) {
+        return repoName.split('/')[1]
+    }
+    else return repoName;
+};
 const repo_owner = core.getInput('REPOSITORY_OWNER')
 const gh_token = core.getInput('GH_TOKEN');
 const commit_message = core.getInput('COMMIT_MESSAGE');
@@ -9415,13 +9420,15 @@ console.log(pokemon)
  */
 
 console.log(`GH_TOKEN: ${gh_token}`);
-console.log(`GH_REPO: ${repo}`);
+console.log(`GH_REPO: ${repo(core.getInput('REPOSITORY'))}`);
 console.log(`GH_REPO_OWNER: ${repo_owner}`);
+
+const repo_name = repo(core.getInput('REPOSITORY'));
 
 function getRepo(){
     octokit.rest.repos.get({
-        owner: 'ibrahiem96',
-        repo: 'ibrahiem96',
+        repo_owner,
+        repo_name,
     })
     .then(({ data }) => {
         console.log(data);
