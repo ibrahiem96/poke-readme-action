@@ -1,7 +1,7 @@
 const fetch = require('node-fetch');
 const core = require('@actions/core');
 // const github = require('@actions/github');
-const { Octokit } = require("@octokit/core");
+const { Octokit } = require("@octokit/rest");
 const axios = require('axios');
 
 const pokemon = core.getInput('POKEMON');
@@ -23,15 +23,12 @@ console.log(pokemon)
  * 3. Update readme
  */
 
-async function getRepo(){
-    try {
-        const repoRes = await octokit.request(`GET /repos/${repo}`);
-        const repoData = await repoRes.json();
-        console.log(repoData);
-        
-    } catch (error) {
-        console.log(error)
-    }
+function getRepo(){
+    const repoData = octokit.rest.repos.get({
+        repo_owner,
+        repo,
+    });
+    console.log(repoData);
 }
 
 getRepo();
