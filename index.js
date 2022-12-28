@@ -17,13 +17,20 @@ console.log(pokemon)
 // const spriteImageFile = fs.createWriteStream(spriteImageFileName);
 
 // get pokemon data
-let fetchResponse = fetch("https://pokeapi.co/api/v2/pokemon/"+pokemon);
+// let fetchResponse = fetch("https://pokeapi.co/api/v2/pokemon/"+pokemon);
+
+const response = await fetch("https://pokeapi.co/api/v2/pokemon/"+pokemon);
+const data = await response.json()
+
+console.log(data);
+console.log(data.abilities);
+core.setOutput("abilities", data.abilities);
 
 // download sprite from received data
-fetchResponse.then(response => response.json()).then(data => {
-    console.log(data);
-    console.log(data.abilities);
-    core.setOutput("abilities", data.abilities);
+// fetchResponse.then(response => response.json()).then(data => {
+//     console.log(data);
+//     console.log(data.abilities);
+//     core.setOutput("abilities", data.abilities);
     // spriteUrl = data.sprites.front_default;
     // console.log(spriteUrl);
 
@@ -37,5 +44,5 @@ fetchResponse.then(response => response.json()).then(data => {
     
     // });
 
-});
+// });
 
