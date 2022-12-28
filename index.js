@@ -42,7 +42,7 @@ function getRepo(){
 }
 
 function getReadmeSha(){
-    return octocore_client.request(`GET repos/${repo_owner}/${repo_owner}/contents/README.md`)
+    return octocore_client.request(`GET /repos/${repo_owner}/${repo_owner}/contents/README.md`)
 }
 
 getRepo().then(({ data }) => {
