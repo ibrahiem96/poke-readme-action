@@ -22,12 +22,13 @@ console.log(pokemon)
  */
 
 function getRepo(){
-    const repoRes = octokit.rest.repos.get({
+    octokit.rest.repos.get({
         owner: 'ibrahiem96',
         repo: 'ibrahiem96',
-    });
-    const repoData = repoRes.json();
-    console.log(repoData);
+    })
+    .then(({ data }) => {
+        console.log(data);
+    })
 }
 
 getRepo();
