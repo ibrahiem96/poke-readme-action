@@ -9419,23 +9419,27 @@ console.log(pokemon)
  * 3. Update readme
  */
 
-console.log(`GH_TOKEN: ${gh_token}`);
-console.log(`GH_REPO: ${repo(core.getInput('REPOSITORY'))}`);
-console.log(`GH_REPO_OWNER: ${repo_owner}`);
+// console.log(`GH_TOKEN: ${gh_token}`);
+// console.log(`GH_REPO: ${repo(core.getInput('REPOSITORY'))}`);
+// console.log(`GH_REPO_OWNER: ${repo_owner}`);
 
 const repo_name = repo(core.getInput('REPOSITORY'));
 
 function getRepo(){
+    var repoData;
     octokit.rest.repos.get({
         owner: repo_owner,
         repo: repo_name,
     })
     .then(({ data }) => {
-        console.log(data);
+        // console.log(data);
+        repoData = data;
     })
+
+    return repoData
 }
 
-getRepo();
+console.log(getRepo());
 
 fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`)
         .then((response) => response.json())
