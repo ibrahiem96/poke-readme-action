@@ -1,10 +1,11 @@
 import fetch from 'node-fetch';
 const core = require('@actions/core');
-const github = require('@actions/github');
+// const github = require('@actions/github');
 const { Octokit } = require("@octokit/core");
 
 const pokemon = core.getInput('POKEMON');
 const repo = core.getInput('REPOSITORY');
+const repo_owner = core.getInput('REPOSITORY_OWNER')
 const gh_token = core.getInput('GH_TOKEN');
 const commit_message = core.getInput('COMMIT_MESSAGE');
 
@@ -15,15 +16,12 @@ console.log(pokemon)
 // const spriteImageFileName = pokemon+"-sprite.png"
 // const spriteImageFile = fs.createWriteStream(spriteImageFileName);
 
-/** TODO
+/**
  * 1. Get repository
  * 2. Get the readme
  * 3. Update readme
  */
 
-async function getRepo() {
-
-}
 
 function getPokemonSpriteURL() {
     const response = fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
@@ -31,15 +29,47 @@ function getPokemonSpriteURL() {
     return data.sprites.front_default;
 }
 
-function replaceMarkdownPNG() {
-    core.setOutput("spriteURL", getPokemonSpriteURL());
+function getNewProjectSection() {
+    return `![image](${getPokemonSpriteURL()})`;
 }
 
-try {
-    replaceMarkdownPNG()
-} catch (error) {
-    console.log(error)
+function commitUpdatedReadme(repo, path, sha, encoding, updatedContent) {
+    try {
+        octokit.request(`PUT /repos/${repo_owner}/${repo}/contents/{path}`, {
+            message: commit_message,
+            content: Buffer.from(updatedContent, "utf-8").toString(encoding),
+            path,
+            sha,
+        });
+    } catch (error) {
+        console.log(error);
+    }
 }
+
+function updateReadme() {
+    try {
+        const response = octokit.request(`GET /repos/${repo_owner}/${repo}/contents/README.md`);
+        const { path, sha, content, encoding } = response.data;
+        const rawContent = Buffer.from(content, encoding).toString();
+        const startIndex = rawContent.indexOf("<!--Pokemon Sprite-->");
+        const updatedContent = `${startIndex === -1 ? rawContent : rawContent.
+            slice(0, startIndex)}\n${getNewProjectSection()}`;
+        commitUpdatedReadme(repo, path, sha, encoding, updatedContent);
+    } catch (error) {
+        try {
+            const content = `\n${getNewProjectSection()}`;
+            octokit.request(`PUT /repos/${repo_owner}/${repo}/contents/{path}`, {
+                message: "Create README",
+                content: Buffer.from(content, "utf-8").toString(encoding),
+            });
+        } catch (error) {
+            console.log(error);
+        }
+        
+    }
+}
+
+updateReadme();
 
 // get pokemon data
 // let fetchResponse = fetch("https://pokeapi.co/api/v2/pokemon/"+pokemon);
