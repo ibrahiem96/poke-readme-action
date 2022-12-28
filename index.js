@@ -24,7 +24,7 @@ console.log(pokemon)
 
 function getRepo(){
     console.log("getting repo...")
-    octokit.request(`GET /repos/${repo_owner}/${repo}`)
+    octokit.request(`GET /repos/${repo}`)
         .then((repoRes) => repoRes.json())
         .then((data) => {
             console.log(data)
