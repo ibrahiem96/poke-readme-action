@@ -41,40 +41,36 @@ const repo_name = repo(core.getInput('REPOSITORY'));
 //     })
 // }
 
-// function getReadmeSha(){
-//     return octocore_client.request(`GET /repos/${repo_owner}/${repo_name}/contents/README.md`)
-// }
-
 function getReadmeSha(){
-    let sha;
-    octocore_client.request(`GET /repos/${repo_owner}/${repo_name}/contents/README.md`)
-        .then(function(res){
-            return res.json();
-        })
-        .then(function(data){
-            sha = data;
-        })
-    return sha;
+    return octocore_client.request(`GET /repos/${repo_owner}/${repo_name}/contents/README.md`)
 }
 
-// function getReadmeBlob(){
-//     getReadmeSha().then(({ data }) => {        
-//         octorest_client.rest.repos.createOrUpdateFileContents({
-//             owner: repo_owner,
-//             repo: repo_name,
-//             path: "README.md",
-//             message: commit_message,
-//             content: "# testing #",
-//             sha: data.sha,
-//             branch: "dev",
-//             committer: committer,
-//             commiter.name,
-//             committer.email,
-//             author.name
-//             author.email: ,
-//           })
-//     })
-// }
+function updateReadme(){
+    getReadmeSha().then(({ data }) => {
+        octocore_client.request(`PUT /repos/${repo_owner}/${repo_name}/contents/README.md`, {
+            message: commit_message,
+            content: "# testing",
+            path: "README.md",
+            sha: data.sha,
+        })
+    })
+    // getReadmeSha().then(({ data }) => {        
+    //     octorest_client.rest.repos.createOrUpdateFileContents({
+    //         owner: repo_owner,
+    //         repo: repo_name,
+    //         path: "README.md",
+    //         message: commit_message,
+    //         content: "# testing #",
+    //         sha: data.sha,
+    //         branch: "dev",
+    //         committer: committer,
+    //         commiter.name,
+    //         committer.email,
+    //         author.name
+    //         author.email: ,
+    //       })
+    // })
+}
 
 // getRepo().then(({ data }) => {
 //     console.log(data);
@@ -84,11 +80,13 @@ function getReadmeSha(){
 //     console.log(data);
 // })
 
-console.log(getReadmeSha());
+// console.log(getReadmeSha());
 
 // getReadmeBlob().then(({ data }) => {
 //     console.log(data);
 // })
+
+updateReadme();
 
 
 fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`)
