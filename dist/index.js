@@ -9393,8 +9393,8 @@ var __webpack_exports__ = {};
 (() => {
 const fetch = __nccwpck_require__(5662);
 const core = __nccwpck_require__(2810);
-const { Octorest } = __nccwpck_require__(3676);
-const { Octocore } = __nccwpck_require__(2182)
+const octorest = __nccwpck_require__(3676);
+const octocore = __nccwpck_require__(2182)
 
 const pokemon = core.getInput('POKEMON');
 const repo = (repoName) => {
@@ -9407,8 +9407,8 @@ const repo_owner = core.getInput('REPOSITORY_OWNER')
 const gh_token = core.getInput('GH_TOKEN');
 const commit_message = core.getInput('COMMIT_MESSAGE');
 
-const octorest = new Octorest({auth: gh_token})
-const octocore = new Octocore({auth: gh_token})
+const octorest_client = octorest.Octokit({auth: gh_token})
+const octocore_client = octocore.Octokit({auth: gh_token})
 
 // const pokemon = process.argv.slice(2)[0];
 console.log(pokemon)
@@ -9428,14 +9428,14 @@ console.log(pokemon)
 const repo_name = repo(core.getInput('REPOSITORY'));
 
 function getRepo(){
-    return octorest.rest.repos.get({
+    return octorest_client.rest.repos.get({
         owner: repo_owner,
         repo: repo_name,
     })
 }
 
 function getReadmeSha(){
-    return octocore.request(`GET repos/${repo_owner}/${repo_owner}/contents/README.md`)
+    return octocore_client.request(`GET repos/${repo_owner}/${repo_owner}/contents/README.md`)
 }
 
 getRepo().then(({ data }) => {
