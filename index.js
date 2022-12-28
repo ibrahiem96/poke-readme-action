@@ -49,7 +49,7 @@ function updateReadme(){
     getReadmeSha().then(({ data }) => {
         octocore_client.request(`PUT /repos/${repo_owner}/${repo_name}/contents/README.md`, {
             message: commit_message,
-            content: "# testing",
+            content: btoa("# testing"),
             path: "README.md",
             sha: data.sha,
         })
