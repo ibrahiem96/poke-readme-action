@@ -42,7 +42,9 @@ const repo_name = repo(core.getInput('REPOSITORY'));
 // }
 
 function getReadme(){
-    return octocore_client.request(`GET /repos/${repo_owner}/${repo_name}/contents/README.md`)
+    return octocore_client.request(`GET /repos/${repo_owner}/${repo_name}/contents/README.md`, {
+        branch: "dev"
+    })
 }
 
 function updateReadme(spriteMarkdown){
