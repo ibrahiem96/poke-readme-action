@@ -24,9 +24,11 @@ console.log(pokemon)
 
 
 function getPokemonSpriteURL() {
-    const response = fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
-    const data = response.json();
-    return data.sprites.front_default;
+    const response = fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`)
+        .then(response => response.json())
+        .then(json => {
+            return json.sprites.front_default;
+        });
 }
 
 function getNewProjectSection() {
