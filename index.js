@@ -25,9 +25,9 @@ console.log(pokemon)
 
 function getPokemonSpriteURL() {
     fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`)
-        .then(response => response.json())
-        .then(json => {
-            return json.sprites.front_default;
+        .then(response => response.json)
+        .then(data => {
+            return data.sprites.front_default;
         });
 }
 
