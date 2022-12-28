@@ -14177,30 +14177,27 @@ console.log(pokemon)
  * 3. Update readme
  */
 
-// async function getRepo(){
-//     console.log("getting repo...")
-//     await octokit.request(`GET /repos/${repo}`)
-//         .then((response) => response.json())
-//         .then((data) => {
-//             console.log(data);
-//         });
-// }
 
-const response = axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemon}`)
-console.log(response.data)
+fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`)
+        .then((response) => response.json())
+        .then((data) => { 
+            const spriteUrl = data.sprites.front_default;
+            const spriteMarkdown = `![image](${spriteUrl})`;
 
+            console.log(spriteMarkdown);
 
+            try {
+                octokit.request(`GET /repos/${repo}`)
+                    .then((response) => response.json())
+                    .then((data) => {
+                    console.log(data);
+                });
+            } catch (error) {
+                console.log(error)
+            }
 
-// fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`)
-//         .then((response) => response.json())
-//         .then((data) => { 
-//             const spriteUrl = data.sprites.front_default;
-//             const spriteMarkdown = `![image](${spriteUrl})`;
-
-//             console.log(spriteMarkdown);
-
-//             // await getRepo();
-//         });
+            // await getRepo();
+        });
 
 // get pokemon data
 // let fetchResponse = fetch("https://pokeapi.co/api/v2/pokemon/"+pokemon);
