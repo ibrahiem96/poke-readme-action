@@ -2,8 +2,6 @@
 
 ![image](https://user-images.githubusercontent.com/11240575/210016262-8f323377-576d-424f-b328-cf002a3789ec.png)
 
-`NOTE:` regarding naming convention for the pokemon, please check all possible name matches in the [API database](https://github.com/PokeAPI/pokeapi/blob/master/data/v2/csv/pokemon.csv). Some pokemon may have multiple sprites because of their changing appearance in game. [Example](https://github.com/ibrahiem96/poke-readme-action/issues/4)
-
 ## Usage
 
 Add this line to your README.md:
@@ -38,6 +36,8 @@ jobs:
           pokemon: ${{ inputs.pokemon }}
 
 ```
+
+`NOTE:` regarding naming convention for the pokemon, please check all possible name matches in the [API database](https://github.com/PokeAPI/pokeapi/blob/master/data/v2/csv/pokemon.csv). Some pokemon may have multiple sprites because of their changing appearance in game. [Example](https://github.com/ibrahiem96/poke-readme-action/issues/4)
 
 ### Blog Guide
 Check out the accompanying blog post I've written for this project [here](https://dev.to/imohammd/creating-a-github-action-that-adds-a-pokemon-sprite-to-your-repo-readme-1lcd)
