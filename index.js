@@ -19,13 +19,11 @@ const repo_name = repo(core.getInput('REPOSITORY'));
 console.log(pokemon)
 
 function getReadme(){
-    // return octocore_client.request(`GET /repos/${repo_owner}/${repo_name}/contents/README.md?ref=dev`)
     return octocore_client.request(`GET /repos/${repo_owner}/${repo_name}/contents/README.md`)
 }
 
 function updateReadme(spriteMarkdown){
     getReadme().then(({ data }) => {
-        // console.log(data)
         const rawContent = Buffer.from(data.content, data.encoding).toString();
         const startIndex = rawContent.indexOf("<!--Pokemon Sprite-->")
         const updatedContent = `${startIndex === -1 ? rawContent : rawContent.slice(0, startIndex)}\n${spriteMarkdown}`
@@ -35,7 +33,6 @@ function updateReadme(spriteMarkdown){
             content: Buffer.from(updatedContent, "utf-8").toString(data.encoding),
             path: "README.md",
             sha: data.sha,
-            // branch: "dev",
         })
     })
 }
