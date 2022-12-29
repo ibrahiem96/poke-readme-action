@@ -2,13 +2,14 @@ const fetch = require('node-fetch');
 const core = require('@actions/core');
 const octocore = require("@octokit/core")
 
-const pokemon = core.getInput('POKEMON');
 const repo = (repoName) => {
     if (repoName.includes('/')) {
         return repoName.split('/')[1]
     }
     else return repoName;
 };
+
+const pokemon = core.getInput('POKEMON');
 const repo_owner = core.getInput('REPOSITORY_OWNER')
 const gh_token = core.getInput('GH_TOKEN');
 const commit_message = core.getInput('COMMIT_MESSAGE');
@@ -18,7 +19,8 @@ const repo_name = repo(core.getInput('REPOSITORY'));
 console.log(pokemon)
 
 function getReadme(){
-    return octocore_client.request(`GET /repos/${repo_owner}/${repo_name}/contents/README.md?ref=dev`)
+    // return octocore_client.request(`GET /repos/${repo_owner}/${repo_name}/contents/README.md?ref=dev`)
+    return octocore_client.request(`GET /repos/${repo_owner}/${repo_name}/contents/README.md`)
 }
 
 function updateReadme(spriteMarkdown){
@@ -33,7 +35,7 @@ function updateReadme(spriteMarkdown){
             content: Buffer.from(updatedContent, "utf-8").toString(data.encoding),
             path: "README.md",
             sha: data.sha,
-            branch: "dev",
+            // branch: "dev",
         })
     })
 }

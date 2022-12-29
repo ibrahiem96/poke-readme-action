@@ -25,9 +25,7 @@ inputs:
     description: "Add a commit message of your choice"
     default: "Updated repo readme with pokemon sprite"
     required: false
-outputs:
-  abilities:
-    description: 'Pokemon Abilities'
+
 runs:
   using: 'node16'
   main: 'dist/index.js'

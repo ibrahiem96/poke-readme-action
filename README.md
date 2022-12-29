@@ -5,4 +5,4 @@
 ## Contributing
 
 ### Requirements
-1. Node 18.x
+1. Node 16.x
