@@ -45,4 +45,15 @@ Check out the accompanying blog post I've written for this project [here](https:
 ## Contributing
 
 ### Requirements
-1. Node 16.x
+1. Node 16.x and latest npm
+2. npm packages: `npm install --save node-fetch@v2 @actions/core @octokit/core @vercel/ncc`
+
+### Building
+Any and all changes to the javascript will need a recompiling of the js files in the `dist/` directory. To do this you need to run the following command after you finish making any javascript changes:
+```bash
+ncc build index.js --license licenses.txt
+```
+
+### Pull Requests
+Please create a new branch for any changes. All pull requests will need to be approved by the administrator(s) before merging. 
+
