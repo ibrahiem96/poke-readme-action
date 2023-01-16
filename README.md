@@ -1,5 +1,7 @@
 # Poke Readme Action
 
+Poke Readme Action is a Github action that allows you to pull 
+
 ![image](https://user-images.githubusercontent.com/11240575/210016262-8f323377-576d-424f-b328-cf002a3789ec.png)
 
 ## Usage
@@ -9,7 +11,7 @@ Add this line to your README.md:
 <!--Pokemon Sprite-->
 ```
 
-`NOTE:` If you are using a repo other than your profile repo (for example ibrahiem96/ibrahiem96 is my profile repo), then you may need to add your own github token.
+`NOTE:` If you are using a repo other than your profile repo (for example ibrahiem96/ibrahiem96 is my profile repo), then you may need to add your own github token. Check the [action YAML](https://github.com/ibrahiem96/poke-readme-action/blob/main/action.yaml) for all available inputs.
 
 Then create a workflow that uses this action, example below:
 
@@ -34,6 +36,8 @@ jobs:
       - uses: ibrahiem96/poke-readme-action@main
         with:
           pokemon: ${{ inputs.pokemon }}
+          # gh_token is only required if you are planning to deploy this action for a repo readme other than your profile repo.
+          # gh_token: ${{ inputs.gh_token }}
 
 ```
 
