@@ -1,6 +1,6 @@
 # Poke Readme Action
 
-Poke Readme Action is a Github action that allows you to pull 
+Poke Readme Action is a Github action that allows you to pull pokemon sprites from the public pokemon API and add it to your Github READMEs
 
 ![image](https://user-images.githubusercontent.com/11240575/210016262-8f323377-576d-424f-b328-cf002a3789ec.png)
 
